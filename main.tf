@@ -77,7 +77,7 @@ resource "null_resource" "download_ca_cert" {
   provisioner "local-exec" {
     command = "echo '${chomp(
       var.ca_cert_override == "" ? element(concat(tls_self_signed_cert.ca.*.cert_pem, [""]), 0) : var.ca_cert_override,
-    )}' >  ${var.cert_output_dir}/${format("%s-ca.crt.pem", random_id.name[0].hex)} && chmod ${var.permissions} '${format("%s-ca.crt.pem", random_id.name[0].hex)}'"
+    )}' > ${format("%s-ca.crt.pem",  ${var.cert_file_prefix})} && chmod ${var.permissions} '${format("%s-ca.crt.pem", ${var.cert_file_prefix}}'"
   }
 }
 
@@ -87,7 +87,7 @@ resource "null_resource" "download_leaf_cert" {
   # Write the PEM-encoded certificate public key to this path (e.g. /etc/tls/leaf.crt.pem).
   # Write the PEM-encoded certificate public key to this path (e.g. /etc/tls/leaf.crt.pem).
   provisioner "local-exec" {
-    command = "echo '${chomp(tls_locally_signed_cert.leaf[0].cert_pem)}' > ${var.cert_output_dir}/${format("%s-leaf.crt.pem", random_id.name[0].hex)} && chmod ${var.permissions} '${format("%s-leaf.crt.pem", random_id.name[0].hex)}'"
+    command = "echo '${chomp(tls_locally_signed_cert.leaf[0].cert_pem)}' > ${format("%s-leaf.crt.pem", ${var.cert_file_prefix}} && chmod ${var.permissions} '${format("%s-leaf.crt.pem", ${var.cert_file_prefix}}'"
   }
 }
 
@@ -97,7 +97,7 @@ resource "null_resource" "download_leaf_private_key" {
   # Write the PEM-encoded leaf certificate private key to this path (e.g. /etc/tls/leaf.key.pem).
   # Write the PEM-encoded leaf certificate private key to this path (e.g. /etc/tls/leaf.key.pem).
   provisioner "local-exec" {
-    command = "echo '${chomp(tls_private_key.leaf[0].private_key_pem)}' >  ${var.cert_output_dir}/${format("%s-leaf.key.pem", random_id.name[0].hex)} && chmod ${var.permissions} '${format("%s-leaf.key.pem", random_id.name[0].hex)}'"
+    command = "echo '${chomp(tls_private_key.leaf[0].private_key_pem)}' >  ${format("%s-leaf.key.pem", ${var.cert_file_prefix}} && chmod ${var.permissions} '${format("%s-leaf.key.pem", ${var.cert_file_prefix}}'"
   }
 }
 
