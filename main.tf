@@ -86,7 +86,6 @@ resource "local_file" "download_leaf_cert" {
     content = chomp(tls_locally_signed_cert.leaf[0].cert_pem)
     filename = concat(var.name, "-leaf.crt.pem")
     file_persmission = var.permissions
-  }
 }
 
 resource "local_file" "download_leaf_private_key" {
