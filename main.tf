@@ -95,6 +95,5 @@ resource "local_file" "download_leaf_private_key" {
     content = chomp(tls_private_key.leaf[0].private_key_pem)
     filename = concat( var.name, "-leaf.key.pem")
     file_persmission = var.permissions
-  }
 }
 
