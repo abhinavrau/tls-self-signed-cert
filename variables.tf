@@ -98,3 +98,8 @@ variable "download_certs" {
   default     = false
 }
 
+variable "cert_output_dir" {
+  description = "Path where to save the certs"
+  default = "." 
+}
+
