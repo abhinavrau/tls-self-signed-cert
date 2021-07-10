@@ -74,7 +74,7 @@ resource "local_file" "download_ca_cert" {
 
  
   content = chomp(var.ca_cert_override == "" ? element(concat(tls_self_signed_cert.ca.*.cert_pem, [""]), 0) : var.ca_cert_override)
-  filename = concat(var.name, "-ca.crt.pem")
+  filename = format("%s-ca.crt.pem",var.name )
   file_permission = var.permissions
 }
 
@@ -84,7 +84,7 @@ resource "local_file" "download_leaf_cert" {
   
  
     content = chomp(tls_locally_signed_cert.leaf[0].cert_pem)
-    filename = concat(var.name, "-leaf.crt.pem")
+    filename = format("%s-leaf.crt.pem",var.name )
     file_permission = var.permissions
 }
 
@@ -93,7 +93,7 @@ resource "local_file" "download_leaf_private_key" {
 
  
     content = chomp(tls_private_key.leaf[0].private_key_pem)
-    filename = concat( var.name, "-leaf.key.pem")
+    filename = format("%s-leaf.key.pem",var.name )
     file_permission = var.permissions
 }
 
